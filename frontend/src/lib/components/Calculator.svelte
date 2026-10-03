@@ -1,4 +1,5 @@
 <script lang="ts">
+  let open = $state(false)
   let currentInput = $state<(number | string)[]>([])
   let result = $state<number | null | string>(null)
 
@@ -37,7 +38,14 @@
   const buttonClasses = "border-border rounded-full border grid place-items-center w-8 aspect-square cursor-pointer"
 </script>
 
-<div class="flex flex-col h-96 w-64 bg-cards border-border border-2 rounded-lg p-4 gap-2">
+{#if open}
+  <div onclick={() => open = false} class="z-10 h-full w-full bg-black/50 fixed inset-0 duration-300"></div>
+{/if}
+<div 
+  aria-expanded={open}
+  onmouseenter={() => !open ? open = true : null} 
+  class={`z-11 flex flex-col h-96 w-64 bg-cards border-border border-2 rounded-lg p-4 gap-2 fixed duration-300 ${open ? "top-1/2 -translate-y-1/2" : "top-[95%]"}`}
+>
   <div class="bg-card border-border border-2 w-full rounded-lg flex items-center justify-center h-12 overflow-hidden">
     {#if result !== null}
       {result}
